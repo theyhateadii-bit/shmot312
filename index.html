@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="theme-color" content="#14171d" />
+<meta name="theme-color" content="#07090f" />
 <title>SHMOT312 — SALES DESK | CRM менеджера</title>
 <style>
 :root{--bg:#f5f6f8;--panel:#fff;--ink:#1b212a;--muted:#858b96;--line:#e8eaf0;--black:#15191f;--lime:#d6f86a;--lav:#edeafa;--purple:#684ecb;--shadow:0 8px 30px rgba(20,25,31,.035);--radius:18px}
@@ -15,6 +15,321 @@
 .brand-link{margin:7px 14px 17px;padding:12px 13px;display:flex;justify-content:space-between;align-items:center;border:1px solid #343b43;border-radius:12px;color:#d7f68a;font-size:12px;font-weight:750;transition:.18s}.brand-link:hover{background:#292f36}
 .workboard{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:19px;align-items:start}.workcol{background:#ebedf1;border-radius:16px;padding:13px;min-width:0;min-height:330px}.workcol-head{padding:8px 8px 14px}.workcol-head h2{font-size:13px;margin:0 0 6px}.workcol-head p{font-size:11px;color:#8a9099;margin:0}.workcard{border:1px solid var(--line);background:#fff;border-radius:13px;padding:15px;margin-bottom:10px;box-shadow:var(--shadow)}.workcard h3{margin:12px 0 5px;font-size:14px}.workcard p{color:#8a9099;font-size:12px;margin:0 0 12px}.wc-top,.wc-stats{display:flex;justify-content:space-between;gap:10px;align-items:center}.wc-top strong{font-size:12px}.worktags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:11px}.wc-stats{border-top:1px solid #eef0f2;padding:12px 0;flex-wrap:wrap;color:#858b95;font-size:11px}.wc-stats b{color:#303641}.workcard .btn{width:100%}.quote-result{background:var(--black);color:#fff;padding:25px;border-radius:16px;margin:19px 0}.quote-result small{display:block;color:#aaa;font-size:12px}.quote-result strong{display:block;font-size:38px;letter-spacing:-1.5px;margin:8px 0}.quote-result div{color:var(--lime);font-size:14px;font-weight:700}
 @media(max-width:1200px){.workboard{grid-template-columns:1fr 1fr}}@media(max-width:700px){.workboard{grid-template-columns:1fr}.brand-link{margin:5px 14px 15px}}
+
+/* --- SHMOT312 NIGHTSHIFT DESIGN SYSTEM --- */
+/* SHMOT312 • NIGHTSHIFT / dark neon system
+   Keep this after the original styles. No external CSS libraries are required. */
+:root {
+  color-scheme: dark;
+  --bg: #07090f;
+  --panel: #121724;
+  --ink: #f4f6ff;
+  --muted: #94a0b7;
+  --line: #272e40;
+  --black: #0c101b;
+  --lime: #c5fb5a;
+  --lav: #271d48;
+  --purple: #ad92ff;
+  --shadow: 0 16px 52px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.025);
+  --radius: 20px;
+  --cyan:#66cbff;
+  --pink:#ff7ca7;
+  --violet:#a88aff;
+}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(ellipse 660px 540px at 45% -260px, rgba(112,77,235,.18),transparent 82%),
+    radial-gradient(ellipse 450px 370px at 96% 22%,rgba(78,127,255,.07),transparent 80%),
+    #07090f;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(190,245,97,.4);color:white}
+::-webkit-scrollbar{width:10px;height:9px}
+::-webkit-scrollbar-track{background:#0c1018}
+::-webkit-scrollbar-thumb{border-radius:10px;background:#323c52;border:2px solid #0c1018}
+.sidebar{
+  background:linear-gradient(167deg,#111525 0%,#0b0e18 52%,#0a0d14 100%);
+  border-right:1px solid #293249;
+  box-shadow:10px 0 50px rgba(0,0,0,.15);
+}
+.sidebar:before{content:"";position:absolute;left:0;top:0;width:100%;height:4px;background:linear-gradient(90deg,#805bff 2%,#54bcff 52%,#c5fb5a 98%)}
+.logo{font-size:25px;letter-spacing:-1.4px;text-shadow:0 0 25px #a888ff24}
+.logo span{filter:drop-shadow(0 0 10px #d4ff5e44)}
+.brand-under{color:#818ba9;letter-spacing:2.7px}
+.side-caption{color:#6c7998;font-size:10px;letter-spacing:1.6px}
+.nav{gap:7px}
+.nav-btn{border:1px solid transparent;color:#a4aec8;border-radius:12px;font-size:12.5px;padding:12px 13px;transition:background .2s,border-color .2s,transform .2s,color .2s}
+.nav-btn:hover{background:rgba(127,114,243,.12);color:#fff;border-color:rgba(151,145,255,.16);transform:translateX(2px)}
+.nav-btn.active{color:#f4f3ff;background:linear-gradient(105deg,#5944b1 0%,#302956 72%,#22243a 100%);border-color:#8066da7d;box-shadow:0 5px 22px #7d5beb21,inset 3px 0 0 #c4fb59}
+.nav-btn.active .nav-icon{color:#d2fc77}
+.nav-btn small{background:#272d43;color:#b7bfd5}
+.nav-btn.active small{background:#d0fa73;color:#171d22}
+.nav-icon{font-size:18px;color:#858dad}
+.brand-link{background:linear-gradient(105deg,rgba(83,62,170,.2),rgba(173,247,92,.045));border-color:#48506b;color:#dcfba4;padding:13px 15px}
+.brand-link:hover{background:#252a3e;border-color:var(--lime)}
+.sidebar-bottom{background:linear-gradient(135deg,#1c2234,#151a28);border:1px solid #303a50;border-radius:15px}
+.sidebar-bottom p{color:#8793b0}
+.sidebar-bottom button{color:#dfe6fb;border:1px solid #4b5370}
+.sidebar-bottom button:hover{background:#30394c}
+.online-dot{box-shadow:0 0 0 4px #c5fb5a12,0 0 15px #c5fb5a90}
+.topbar{
+  background:rgba(12,16,26,.88);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  border-bottom:1px solid #292f44;
+  min-height:79px;
+  position:sticky;top:0;z-index:11;
+}
+.crumb{color:#8897b4}
+.crumb b{color:#e7edfa}
+.clock{color:#8895ab}
+.avatar{background:linear-gradient(130deg,#5840aa,#202b3b 65%,#4a762f);color:#efffd0;border:1px solid #62618d;box-shadow:0 0 16px #7964e637;border-radius:13px}
+.warning-pill{color:#ffdb85;background:#4d3a172d;border:1px solid #a885334b}
+.content{padding-top:34px}
+.title-row{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  border:1px solid #2b3046;
+  background:linear-gradient(115deg,#151b2c 0%,#161829 54%,#0f1825 100%);
+  border-radius:25px;
+  box-shadow:0 19px 60px rgba(0,0,0,.2),inset 0 1px 0 #ffffff0f;
+  padding:27px 30px;
+  margin-bottom:23px;
+  align-items:center;
+}
+.title-row:before{content:"";position:absolute;right:-65px;top:-135px;width:480px;height:350px;background:radial-gradient(ellipse at center,#7650f133,transparent 62%);z-index:-1;pointer-events:none}
+.title-row:after{content:"";position:absolute;right:14%;bottom:-155px;width:300px;height:230px;background:radial-gradient(ellipse at center,#8fce6220,transparent 70%);z-index:-1;pointer-events:none}
+.eyebrow{color:#baa5ff;letter-spacing:2.1px;font-size:10.5px}
+.title-row h1{font-size:clamp(25px,2.35vw,37px);letter-spacing:-1.4px;line-height:1.15;margin-bottom:9px;color:#fff}
+.subtext{color:#a8b2c8;font-size:13px}
+.btn{border-color:#343c53;background:#242b40;color:#f3f5ff;transition:transform .17s ease,box-shadow .17s ease,filter .17s ease,border-color .17s ease;font-size:12px}
+.btn:hover:not(:disabled){transform:translateY(-1px);filter:brightness(1.13);border-color:#64708e}
+.btn:active:not(:disabled){transform:translateY(0)}
+.btn.primary{background:linear-gradient(125deg,#d8ff86 0%,#b6f34d 100%);border-color:#c9f672;color:#141c0c;box-shadow:0 5px 21px #bffa5426;font-weight:850}
+.btn.primary:hover{box-shadow:0 7px 30px #c5fb5a45;border-color:#dbff91}
+.btn.outline{color:#e9edfa;background:#1a2131;border:1px solid #374158}
+.btn.outline:hover{background:#252e43;border-color:#866df1}
+.btn.light{background:#232a3d;border:1px solid #2b344a;color:#cdd6ea}
+.btn.danger{background:rgba(233,65,111,.095);border:1px solid rgba(239,82,117,.46);color:#ff8ba7}
+.btn.danger:hover{background:#492536}
+.btn:focus-visible,.nav-btn:focus-visible,.linkish:focus-visible,.close:focus-visible,a:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+.stat,.panel,.product-card,.script-card,.workcard{
+  background:linear-gradient(148deg,#151b2a,#101522);
+  border-color:#293246;
+  box-shadow:var(--shadow);
+}
+.stat{min-height:158px;overflow:hidden;padding:23px}
+.stat::before{content:"";position:absolute;top:0;left:22px;right:22px;height:2px;background:linear-gradient(90deg,#a891ff,transparent);opacity:.6}
+.stat:nth-child(2)::before{background:linear-gradient(90deg,#6bbdff,transparent)}
+.stat:nth-child(3)::before{background:linear-gradient(90deg,#65d7b5,transparent)}
+.stat:nth-child(4)::before{background:linear-gradient(90deg,#f9b36d,transparent)}
+.stat.accent{background:linear-gradient(135deg,#272047 0%,#17192e 68%,#172426 100%);border-color:#705aaf83;color:#fff;box-shadow:0 15px 34px #4b2b8825,inset 0 1px 0 #ffffff17}
+.stat.accent:after{content:"";position:absolute;right:-52px;top:-65px;width:190px;height:190px;background:radial-gradient(circle,#9177fd31,transparent 68%);pointer-events:none}
+.stat-top,.stat.accent .stat-top{color:#aebad2}
+.stat .num{color:#f8f9ff;font-weight:880;margin-top:19px}
+.stat:nth-child(2) .num{color:#9bd6ff}
+.stat:nth-child(3) .num{color:#b2f3c0}
+.stat:nth-child(4) .num{color:#ffcf8c}
+.stat.accent .num{color:#f6f2ff}
+.stat .foot,.stat.accent .foot{color:#939fb6}
+.stat .chip{background:#2b3542;color:#c2ef89;border:1px solid #49674147}
+.stat.accent .chip{background:#352e54;color:#d6c8ff;border:1px solid #5b4c90}
+.panel{padding:25px}
+.panel-head{margin-bottom:18px}
+.panel-head h2,.panel h2{color:#f1f4fe;font-size:16px;letter-spacing:-.4px}
+.panel-head .text-link{color:#b9a6ff}
+.panel-head .text-link:hover{color:#d5c8ff;text-decoration:underline}
+.inbox-line,.task{border-bottom-color:#293145}
+.inbox-line:hover{background:#ffffff05;border-radius:10px}
+.person-icon{background:linear-gradient(130deg,#3d2d6a,#24213d);color:#dac8ff;border:1px solid #6e5b9b4d}
+.person-icon.green{background:linear-gradient(130deg,#193c37,#1e2e37);color:#83ecd4;border-color:#39977f4d}
+.person-icon.orange{background:linear-gradient(130deg,#443023,#2a2530);color:#ffc08f;border-color:#ae7b574d}
+.person-name{color:#eef2ff;font-weight:800}
+.person-detail,.task small,.empty,.mini,.pipe-step small,.data-table td small,.workcard p,.workcol-head p,.product-card .small,.settings-item p,.note,.print-note{color:#95a1b8}
+.tag{background:#282d41;color:#c0cae1;border:1px solid #3d4565;border-radius:9px;padding:5px 9px}
+.tag.violet{background:#a274ff20;color:#cbb7ff;border-color:#a47bff58}
+.tag.green{background:#5ee3a017;color:#79e7b3;border-color:#67eab64a}
+.tag.yellow{background:#ffbe5817;color:#ffd28a;border-color:#e1a54f59}
+.tag.blue{background:#4cafff18;color:#95d4ff;border-color:#5cb8ff4a}
+.tag.red{background:#ff698921;color:#ff9cae;border-color:#ff779b54}
+.tag.dark{background:#283247;color:#c6d1e5;border-color:#414b63}
+.task-dot{box-shadow:0 0 14px #fba46150}
+.task-dot.green{box-shadow:0 0 14px #84eaad50}
+.task-dot.red{box-shadow:0 0 14px #f06f9950}
+.pipe-step{background:#101522;border-color:#2b3346;border-radius:14px;position:relative;overflow:hidden}
+.pipe-step strong{color:#e9e5ff}
+.pipe-step:nth-child(2) strong{color:#9dd0ff}
+.pipe-step:nth-child(3) strong{color:#e9cb99}
+.pipe-step:nth-child(4) strong{color:#d9c0ff}
+.pipe-step:nth-child(5) strong{color:#8cf0b8}
+.pipe-bar,.progress{background:#2d3447}
+.pipe-bar span,.progress span{background:linear-gradient(90deg,#805dfc,#bfa2ff)}
+.pipe-step:nth-child(2) .pipe-bar span{background:linear-gradient(90deg,#4f90ec,#76d9f8)}
+.pipe-step:nth-child(3) .pipe-bar span{background:linear-gradient(90deg,#dc984d,#f8d88d)}
+.pipe-step:nth-child(4) .pipe-bar span{background:linear-gradient(90deg,#9c66fa,#e1abff)}
+.pipe-step:nth-child(5) .pipe-bar span{background:linear-gradient(90deg,#4aa891,#adf0bb)}
+/* Form system – important: all selects, inputs and date controls remain native and functional. */
+.field,select,textarea,input{
+  color:#f4f6ff;
+  background:#1a2131;
+  border:1px solid #39445f;
+  border-radius:12px;
+  padding:12px 13px;
+  color-scheme:dark;
+  transition:background .2s,border-color .2s,box-shadow .2s;
+}
+input::placeholder,textarea::placeholder{color:#7786a2;opacity:1}
+.field:hover,select:hover,textarea:hover,input:hover{border-color:#53627f;background:#1c2536}
+.field:focus,select:focus,textarea:focus,input:focus{outline:0;background:#20283b;border-color:#a58bff;box-shadow:0 0 0 3px #a58bff22,0 0 16px #7057da15}
+select{cursor:pointer}
+select option{color:#e9f0ff;background:#161d2b}
+.form-field label{color:#aebee0;font-weight:750;font-size:11.5px;letter-spacing:.05px}
+.section-label{color:#e7edfe}
+.data-table th{color:#94a3c0;border-bottom-color:#30384d;letter-spacing:.25px}
+.data-table td{color:#e6eaf5;border-bottom-color:#282f44}
+.data-table tbody tr:hover{background:#222a3a}
+.data-table td strong{color:#f5f6fe}
+.data-table select{background:#1e2638;color:#dde9fc}
+.linkish{color:#bba7ff}
+.linkish:hover{color:#dfd4ff}
+.order-line{background:#111927;border:1px solid #27344b}
+.order-line .remove{background:#482735;color:#ff94ab}
+.order-line .remove:hover{background:#673247}
+.order-total{background:linear-gradient(100deg,#30234d,#19213c 60%,#223623);border:1px solid #625088;color:white}
+.order-total strong{color:#d4ff76}
+.total-help{color:#a8b3c9}
+.notice{background:#2a2443;border:1px solid #554685;color:#d2c4ff}
+.notice.warn{background:#3d301c;border-color:#7a562e;color:#ffd59e}
+.script-card{gap:16px}
+.script-card h3{color:#e7ebfa}
+.script-card p{color:#b2bdd2}
+.product-card{transition:transform .2s,border-color .2s,box-shadow .2s}
+.product-card:hover{border-color:#866cdd;box-shadow:0 20px 40px #01010555,0 0 0 1px #846ac62b}
+.product-card h3{color:#f5f7fc}
+.product-pic{background:radial-gradient(circle at 50% 35%,#594480,#242037 77%);border:1px solid #50436b}
+.product-card:nth-child(2n) .product-pic{background:radial-gradient(circle at 50% 35%,#345b55,#192d31 77%);border-color:#3b6255}
+.product-card:nth-child(3n) .product-pic{background:radial-gradient(circle at 50% 35%,#6e4b39,#322631 77%);border-color:#645045}
+.product-card .price{color:#d1fa87}
+.report-row,.settings-item{border-bottom-color:#30384a}
+.tip-card{background:linear-gradient(133deg,#352351,#1b2035 61%,#1b3431);border:1px solid #594e81;box-shadow:0 18px 35px #0004}
+.tip-card p{color:#bbc6d9}
+.kpi-note{background:#203526;border:1px solid #406345;color:#b4edbb}
+.bar-col{color:#a4b1c7}
+.bar-col i{background:linear-gradient(180deg,#ad91ff,#5548ad)}
+.bar-col:nth-child(2n) i{background:linear-gradient(180deg,#d8fb73,#639b46)}
+.divider{border-top-color:#30374a}
+.quick-links a{background:#2c214c;border:1px solid #7456bd;color:#d6bdff}
+.quick-links a:hover{background:#4b3778}
+.dropzone{background:#141d2a;border-color:#47546a;color:#a5b1c5}
+.workboard{grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.workcol{background:linear-gradient(180deg,#151b2a,#101420);border:1px solid #30394f;min-height:310px;border-radius:17px}
+.workcol:nth-child(1){border-top:2px solid #ad91ff}
+.workcol:nth-child(2){border-top:2px solid #ffbc80}
+.workcol:nth-child(3){border-top:2px solid #71c6ff}
+.workcol:nth-child(4){border-top:2px solid #96e89b}
+.workcol-head h2{color:#e7edfa;font-weight:800}
+.workcard{padding:14px;border-radius:14px;background:linear-gradient(135deg,#202739,#171c2b)}
+.workcard h3{color:#f0f2ff}
+.wc-stats{border-top-color:#363d4f;color:#a7b2c8}
+.wc-stats b{color:#ebf2ff}
+.quote-result{background:linear-gradient(120deg,#292149,#1a1d32 68%,#273925);border:1px solid #685b90}
+.quote-result small{color:#acb8d4}
+.quote-result strong{color:#e3ffba}
+.quote-result div{color:#c7ff6f}
+.toast{background:#26334a;border:1px solid #7eaa76;color:#e8ffd5;box-shadow:0 20px 50px #0009}
+.print-note{margin-top:23px}
+/* Modal / client card – the main requested neon redesign */
+.modal-mask{background:rgba(1,3,9,.83);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);padding:30px 16px}
+.modal{
+  position:relative;
+  isolation:isolate;
+  width:min(760px,100%);
+  overflow:hidden;
+  border-radius:25px;
+  border:1px solid #445075;
+  background:linear-gradient(133deg,#161b2c 0%,#101521 58%,#131d25 100%);
+  box-shadow:0 38px 110px rgba(0,0,0,.78),0 0 45px rgba(93,71,232,.14),inset 0 1px 0 rgba(255,255,255,.07);
+  padding:27px 32px 30px;
+}
+.modal:before{content:"";position:absolute;z-index:-1;top:-155px;right:-130px;width:440px;height:440px;background:radial-gradient(circle,#774cff3b 0%,#5f4ad217 34%,transparent 68%);pointer-events:none}
+.modal:after{content:"";position:absolute;z-index:-1;bottom:-170px;right:-120px;width:380px;height:330px;background:radial-gradient(ellipse,#a7ee5930,transparent 68%);pointer-events:none}
+.modal.wide{width:min(1070px,100%)}
+.modal.lead-modal{width:min(930px,100%);border-color:#586184}
+.modal-header{position:relative;border-bottom:1px solid #313b55;padding:1px 0 22px;margin-bottom:25px;gap:18px}
+.modal-header h2{font-size:27px;color:#f6f6ff;font-weight:850;letter-spacing:-.8px}
+.modal-head-left{display:flex;align-items:center;gap:17px}
+.modal-head-icon{width:61px;height:61px;display:grid;place-items:center;font-size:26px;border-radius:19px;background:linear-gradient(135deg,#5635a3,#283452 68%,#3a6b44);border:1px solid #957df7;box-shadow:0 6px 22px #5038bf51,inset 0 1px 0 #ffffff21;flex:none;color:#e5e0ff}
+.modal-subtitle{font-size:12px;color:#a8b7d7;margin:7px 0 0;line-height:1.5}
+.close{width:42px;height:42px;background:#252e42;border:1px solid #414e6b;color:#e9f0ff;border-radius:13px;font-size:24px;flex:none;transition:.2s}
+.close:hover{background:#41335f;border-color:#8d74d8;color:#fff}
+.modal .form-field{gap:9px}
+.modal .form-field input,.modal .form-field select,.modal .form-field textarea{background:#1c2334;border-color:#3d4a67;border-radius:12px;min-height:46px;padding:12px 15px;font-size:13px}
+.modal .form-field textarea{min-height:116px;line-height:1.6}
+.modal .form-field label{color:#b8c8ed;font-size:12px}
+.modal .grid-two{gap:19px 20px}
+.modal .grid-three{gap:13px}
+.modal-footer{border-top:1px solid #2e3850;padding-top:22px;margin-top:26px;align-items:center}
+.modal-footer .btn{padding:12px 18px}
+.modal-footer .btn.primary{box-shadow:0 6px 20px #bbfb5033}
+#leadForm .form-field label:before{display:inline-block;margin-right:8px;width:14px;color:#9b88ff;font-size:14px;vertical-align:0}
+#leadForm .form-field:has([name=name]) label:before{content:'♙'}
+#leadForm .form-field:has([name=source]) label:before{content:'↗';color:#7bd3ff}
+#leadForm .form-field:has([name=handle]) label:before{content:'◎';color:#bb87ff}
+#leadForm .form-field:has([name=phone]) label:before{content:'◉';color:#54d7a6}
+#leadForm .form-field:has([name=status]) label:before{content:'▥';color:#9baeff}
+#leadForm .form-field:has([name=priority]) label:before{content:'ϟ';color:#ffc57b}
+#leadForm .form-field:has([name=clientType]) label:before{content:'♧';color:#8db7ff}
+#leadForm .form-field:has([name=company]) label:before{content:'▦';color:#8db7ff}
+#leadForm .form-field:has([name=campaign]) label:before{content:'➤';color:#8db7ff}
+#leadForm .form-field:has([name=category]) label:before{content:'◇';color:#80ecb5}
+#leadForm .form-field:has([name=notes]) label:before{content:'▤';color:#99b1ff}
+#leadForm .form-field:has([name=nextAction]) label:before{content:'≡';color:#9baeff}
+#leadForm .form-field:has([name=dueDate]) label:before{content:'□';color:#9baeff}
+#leadForm textarea[name=notes]{min-height:118px}
+@media(max-width:1450px){.workboard{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1200px){.title-row{padding:25px}.content{padding-top:24px}}
+@media(max-width:900px){.title-row{gap:22px}.nav-btn.active{box-shadow:inset 3px 0 0 #c4fb59}}
+@media(max-width:700px){
+ .workboard{grid-template-columns:1fr}
+ .modal-header h2{font-size:23px}
+ .modal-head-icon{width:50px;height:50px;border-radius:15px;font-size:21px}
+ .modal{padding:20px}
+ .modal-mask{padding:10px}
+ .modal-header{padding-bottom:18px}
+ .modal-footer{gap:14px}
+ .title-row{padding:22px 19px}
+ .title-row h1{font-size:27px}
+ .title-row .actions{width:100%}
+ .title-row .actions .btn{flex:1}
+ .product-grid{gap:10px}
+ .stat{padding:17px;min-height:132px}
+ .stats{gap:10px}
+ .stat .num{font-size:24px;overflow-wrap:anywhere}
+ .workcol{min-height:200px}
+ .mobile-menu{border:1px solid #44516a;background:#222a3f;color:#f1f4ff}
+ .modal-footer .right{width:100%;justify-content:flex-end}
+ .modal-footer .right .btn{flex:1}
+}
+@media(max-width:440px){
+ .topbar{gap:6px}.topbar-right{gap:5px}.crumb{font-size:11px}
+ .warning-pill{font-size:10px;padding:5px 6px}
+ .stat .num{font-size:21px}
+ .panel{padding:17px}
+ .title-row .actions{display:grid;grid-template-columns:1fr 1fr;width:100%}
+ .title-row .actions .btn:last-child:nth-child(odd){grid-column:span 2}
+ .modal{padding:18px 15px}
+ .modal-head-left{gap:12px}
+ .modal-head-icon{width:44px;height:44px}
+ .modal-header h2{font-size:20px}
+ .modal-subtitle{font-size:11px}
+ .close{width:36px;height:36px}
+ .modal-footer .btn{padding:11px 12px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -143,7 +458,7 @@ const scripts=[
 function scriptsView(){return heading('SHMOT312 / коммуникации','Быстрые ответы','Шаблоны для Direct и WhatsApp, чтобы вести переписку к заказу.',`<button class="btn outline" data-page="leads">Выбрать клиента ↗</button>`)+`<div class="panel" style="margin-bottom:17px"><div class="grid-two"><div class="form-field"><label>Подставить имя и товар клиента</label><select id="scriptLead"><option value="">Без клиента (пример)</option>${db.leads.map(l=>`<option value="${l.id}">${esc(l.name)} — ${esc(l.category||'товар')}</option>`).join('')}</select></div><div class="form-field"><label>Как пользоваться</label><div class="note">Выберите клиента, нажмите «Скопировать» и вставьте текст в Direct или WhatsApp. Сумму и срок проверяйте перед отправкой.</div></div></div></div><div class="script-list">${scripts.map(([title,t],i)=>`<article class="script-card"><h3>${esc(title)}</h3><p id="scriptText${i}">${esc(fmtTemplate(t))}</p><button class="btn sm outline" data-script="${i}">⧉ Скопировать ответ</button></article>`).join('')}</div>`}
 function reportsView(){let completed=db.orders.filter(o=>o.status==='done');let val=db.orders.reduce((s,o)=>s+total(o),0),paid=db.orders.reduce((s,o)=>s+Number(o.paid||0),0),outstanding=Math.max(0,db.orders.filter(o=>!['cancelled'].includes(o.status)).reduce((s,o)=>s+Math.max(total(o)-Number(o.paid||0),0),0));let byProduct=db.products.map(p=>({p,n:db.orders.flatMap(o=>o.items).filter(x=>x.productId===p.id).reduce((s,x)=>s+Number(x.qty),0)})).sort((a,b)=>b.n-a.n);let max=Math.max(1,...byProduct.map(x=>x.n));let weekly=Array.from({length:7},(_,i)=>{let d=localDay(i-6);return {day:new Date(d+'T12:00:00').toLocaleDateString('ru-RU',{weekday:'short'}),n:db.leads.filter(l=>l.createdAt.slice(0,10)===d).length}}),maxDay=Math.max(1,...weekly.map(x=>x.n));return heading('SHMOT312 / аналитика','Отчёты','Показатели рассчитываются по записям в этой локальной базе.',`<button class="btn outline" data-action="export-orders">↓ Скачать продажи CSV</button>`)+`<div class="stats"><div class="stat"><div class="stat-top">Потенциал заказов</div><div class="num">${fmt(val)}</div><div class="foot">Сумма заказов, включая отменённые</div></div><div class="stat accent"><div class="stat-top">Оплачено</div><div class="num">${fmt(paid)}</div><div class="foot">Фактически отмеченные оплаты</div></div><div class="stat"><div class="stat-top">Ожидаемая доплата</div><div class="num">${fmt(outstanding)}</div><div class="foot">По неотменённым заказам</div></div><div class="stat"><div class="stat-top">Доставлено заказов</div><div class="num">${completed.length}</div><div class="foot">С этапом «Доставлен»</div></div></div><div class="two-col"><section class="panel"><h2>Новые обращения за 7 дней</h2><div class="bar-graph">${weekly.map(d=>`<div class="bar-col"><strong>${d.n}</strong><i style="height:${Math.max(5,Math.round(d.n/maxDay*100))}%"></i><span>${esc(d.day)}</span></div>`).join('')}</div></section><section class="panel"><h2>Продано товаров (штук)</h2>${byProduct.map(({p,n})=>`<div class="report-row"><div><strong>${esc(p.name)}</strong><div class="progress"><span style="width:${Math.round(n/max*100)}%"></span></div></div><b>${n}</b></div>`).join('')}</section></div><div class="kpi-note">Конверсию, процент менеджера и реальную прибыль можно рассчитать после ввода корректной себестоимости, всех расходов и правил начисления комиссии.</div>`}
 function settingsView(){return heading('Настройки / резервирование','Данные и настройки','Экспорт, импорт и контроль сохранности записей.')+`<div class="notice warn">⚠ Это локальный прототип, не готовая корпоративная CRM. Здесь нет входа по паролю, серверного резервирования, командного доступа и интеграции с Meta. Не храните чувствительные клиентские данные на общем компьютере без защиты.</div><section class="panel"><div class="settings-item"><div><strong>Скачать резервную копию JSON</strong><p>Все заявки, заказы, каталог и суммы. Сохраните файл отдельно.</p></div><button class="btn outline" data-action="backup">↓ Скачать JSON</button></div><div class="settings-item"><div><strong>Восстановить резервную копию</strong><p>Импорт заменит текущие данные, предварительно сохраните их.</p></div><label class="btn outline">↑ Выбрать JSON<input id="importFile" type="file" accept="application/json,.json" hidden></label></div><div class="settings-item"><div><strong>Экспорт заявок в CSV</strong><p>CSV можно открыть в Google Таблицах или Excel.</p></div><button class="btn outline" data-action="export-leads">↓ Заявки</button></div><div class="settings-item"><div><strong>Экспорт заказов в CSV</strong><p>Содержит состав, стоимость, оплаты и статусы.</p></div><button class="btn outline" data-action="export-orders">↓ Заказы</button></div><div class="settings-item"><div><strong>Сбросить демонстрационные данные</strong><p>Восстановит примерные карточки и цены. Ваши изменения будут удалены.</p></div><button class="btn danger" data-action="reset">Сбросить</button></div></section>`}
-function modal(title,inner,wide=false){$('#modalRoot').innerHTML=`<div class="modal-mask" id="mask"><div class="modal ${wide?'wide':''}" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="modal-header"><h2>${esc(title)}</h2><button type="button" class="close" data-action="close-modal" aria-label="Закрыть">×</button></div>${inner}</div></div>`;document.body.style.overflow='hidden'}
+function modal(title,inner,wide=false){const isLead=title==='Карточка клиента'||title==='Новая заявка';const headline=`<div class="modal-head-left"><span class="modal-head-icon" aria-hidden="true">${isLead?'♙':'✦'}</span><div><h2>${esc(title)}</h2><p class="modal-subtitle">${isLead?'Вся информация о клиенте в одном месте':'Управление заявками, заказами и продажами'}</p></div></div>`;$('#modalRoot').innerHTML=`<div class="modal-mask" id="mask"><div class="modal ${wide?'wide':''} ${isLead?'lead-modal':''}" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="modal-header">${headline}<button type="button" class="close" data-action="close-modal" aria-label="Закрыть">×</button></div>${inner}</div></div>`;document.body.style.overflow='hidden'}
 function closeModal(){$('#modalRoot').innerHTML='';document.body.style.overflow=''}
 function leadModal(leadId){const l=getLead(leadId)||{name:'',handle:'',phone:'',source:'instagram',status:'new',priority:'normal',category:'',notes:'',nextAction:'',dueDate:'',clientType:'private',company:'',campaign:'',id:null};let hasOrders=!!db.orders.find(o=>o.leadId===l.id);modal(l.id?'Карточка клиента':'Новая заявка',`<form id="leadForm" data-id="${esc(l.id||'')}"><div class="grid-two"><div class="form-field"><label>Имя клиента *</label><input name="name" required maxlength="100" value="${esc(l.name)}" placeholder="Имя или компания"></div><div class="form-field"><label>Источник</label><select name="source">${opts({instagram:'Instagram Direct',whatsapp:'WhatsApp',manual:'Другое / вручную'},l.source)}</select></div><div class="form-field"><label>Instagram (без @)</label><input name="handle" value="${esc(l.handle)}" placeholder="username" maxlength="100"></div><div class="form-field"><label>WhatsApp (международный номер)</label><input name="phone" value="${esc(l.phone)}" placeholder="+996700123456" maxlength="30"></div><div class="form-field"><label>Этап продажи</label><select name="status">${opts(statuses,l.status)}</select></div><div class="form-field"><label>Приоритет</label><select name="priority">${opts({normal:'Обычный',high:'Горячая заявка',low:'Низкий'},l.priority)}</select></div><div class="form-field"><label>Тип клиента</label><select name="clientType">${opts({private:'Частный',company:'Компания / корпоративный'},l.clientType||'private')}</select></div><div class="form-field"><label>Компания / организация</label><input name="company" value="${esc(l.company||'')}" placeholder="Название или бренд" maxlength="160"></div><div class="form-field wide"><label>Реклама / откуда пришёл</label><input name="campaign" value="${esc(l.campaign||'')}" placeholder="Например: сторис, рилс, акция, рекомендация" maxlength="200"></div><div class="form-field wide"><label>Товар / интерес</label><input name="category" value="${esc(l.category)}" placeholder="Например: 20 батников с логотипом" maxlength="160"></div><div class="form-field wide"><label>Заметки, возражения, размеры, ткань, цвета</label><textarea name="notes" maxlength="3000" placeholder="Всё важное по запросу…">${esc(l.notes)}</textarea></div><div class="form-field"><label>Следующее действие</label><input name="nextAction" value="${esc(l.nextAction)}" placeholder="Написать, отправить прайс…" maxlength="250"></div><div class="form-field"><label>Дата следующего действия</label><input name="dueDate" type="date" value="${esc(l.dueDate)}"></div></div>${l.id?`<div class="quick-links" style="margin-top:17px">${contactLinks(l)}</div>`:''}<div class="modal-footer"><div>${l.id&&!hasOrders?`<button type="button" class="btn danger sm" data-delete-lead="${l.id}">Удалить клиента</button>`:''}${hasOrders?'<span class="note">Клиент связан с заказами, удаление недоступно</span>':''}</div><div class="right"><button type="button" class="btn outline" data-action="close-modal">Отмена</button><button type="submit" class="btn primary">Сохранить клиента</button></div></div></form>`)}
 function itemRow(item={}){const p=db.products.find(p=>p.id===item.productId)||db.products[0]||{id:'',name:'',price:0};const x={productId:p.id,name:p.name,size:'',color:'',qty:1,base:p.price,print:0,...item};return `<div class="order-line"><div class="form-field"><label>Товар</label><select class="oi-product">${db.products.map(t=>`<option value="${t.id}" ${t.id===x.productId?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div><div class="form-field"><label>Размер</label><input class="oi-size" value="${esc(x.size)}" placeholder="M/разные" maxlength="50"></div><div class="form-field"><label>Цвет</label><input class="oi-color" value="${esc(x.color)}" placeholder="Чёрный" maxlength="70"></div><div class="form-field"><label>Штук</label><input class="oi-qty" type="number" min="1" max="100000" step="1" required value="${Number(x.qty)||1}"></div><div class="form-field"><label>Цена/шт</label><input class="oi-base" type="number" min="0" step="1" value="${Number(x.base)||0}"></div><div class="form-field"><label>Печать/шт</label><input class="oi-print" type="number" min="0" step="1" value="${Number(x.print)||0}"></div><button class="remove" type="button" data-action="remove-item" title="Удалить позицию">×</button></div>`}
