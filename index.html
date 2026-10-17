@@ -330,6 +330,29 @@ select option{color:#e9f0ff;background:#161d2b}
 }
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
+
+/* Interactive Kanban: four clear destinations, drag-feedback, and touch/keyboard controls. */
+.workcol{transition:border-color .2s,background .2s,box-shadow .2s;position:relative}
+.board-column-title{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.board-column-title h2{margin:0;min-width:0}
+.board-count{display:grid;place-items:center;flex:none;padding:4px 9px;min-width:28px;border-radius:9px;background:#ffffff12;color:#d8e5ff;border:1px solid #ffffff24;font-size:12px;font-weight:800}
+.board-help{display:flex;align-items:center;gap:12px;padding:14px 17px;margin:16px 0 19px;border:1px solid #3b4570;background:linear-gradient(100deg,#252041,#131c2e);border-radius:14px;color:#b7c8eb;font-size:12px}
+.board-help strong{color:#eef4ff}
+.board-help-icon{display:grid;place-items:center;background:#855af130;border-radius:11px;width:35px;height:35px;flex:none;color:#beaeff;font-size:22px}
+.workcard[draggable=true]{cursor:grab;user-select:none;transition:transform .17s,border-color .17s,box-shadow .17s,opacity .17s}
+.workcard[draggable=true]:hover{border-color:#717fba;transform:translateY(-2px);box-shadow:0 12px 30px #03071065}
+.workcard.is-dragging{cursor:grabbing;opacity:.35;transform:scale(.98)}
+.workcol.is-drop-target{border:2px dashed #c3fa70!important;background:linear-gradient(180deg,#25342a,#121d28);box-shadow:0 0 0 3px #c8ff551d,inset 0 0 35px #c1ff4a14}
+.workcol.is-drop-target .board-drop-hint{opacity:1;transform:translateY(0)}
+.workcol.is-drop-target .board-empty{color:#b9fa6b}
+.board-grip{margin-left:auto;color:#9eacd7;font-size:22px;line-height:1;cursor:grab;letter-spacing:1px}
+.workcard .wc-top .tag{font-size:10px}
+.board-drop-hint{opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;border:1px dashed #bafc70a0;border-radius:9px;padding:9px;text-align:center;margin-top:10px;color:#d4ffa0;font-size:11px;font-weight:700;pointer-events:none}
+.move-label{display:block;color:#9faccc;font-size:10px;font-weight:750;margin-bottom:5px}
+.board-move{display:block;width:100%;font-size:11px;padding:9px 11px;border:1px solid #424d69;background:#182335;color:#dfebff;border-radius:9px;margin:0 0 9px;cursor:pointer}
+.board-move:hover,.board-move:focus{border-color:#ad9afa}
+.board-empty{padding:44px 12px;color:#7685a5}
+@media(max-width:700px){.board-help{display:none}.workcard[draggable=true]{cursor:default}.board-grip{display:none}.board-move{font-size:13px;padding:12px}.board-drop-hint{display:none}}
 </style>
 </head>
 <body>
@@ -370,8 +393,8 @@ const fmt=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}).format(Num
 const date=s=>s?new Date(s.length===10?s+'T12:00:00':s).toLocaleDateString('ru-RU',{day:'2-digit',month:'short'}):'—';
 const dateTime=s=>s?new Date(s).toLocaleString('ru-RU',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'—';
 const statuses={new:'Новая',consult:'Консультация',offer:'Предложение',mockup:'Макет',payment:'Ожидает оплату',production:'В производстве',shipping:'Отправлен',done:'Завершён',lost:'Отказ'};
-const orderStatuses={draft:'Новый заказ',mockup:'На согласовании',payment:'Ожидает оплату',production:'В производстве',shipping:'Отправлен',done:'Доставлен',cancelled:'Отменён'};
-const statusColors={new:'violet',consult:'blue',offer:'yellow',mockup:'violet',payment:'yellow',production:'blue',shipping:'blue',done:'green',lost:'red',draft:'dark',cancelled:'red'};
+const orderStatuses={draft:'Новый заказ',mockup:'На согласовании',payment:'Ожидает оплату',production:'В производстве',shipping:'Отправлен',ready:'Готов к выдаче',done:'Доставлен',cancelled:'Отменён'};
+const statusColors={new:'violet',consult:'blue',offer:'yellow',mockup:'violet',payment:'yellow',production:'blue',shipping:'blue',ready:'green',done:'green',lost:'red',draft:'dark',cancelled:'red'};
 const PRODUCT_EMOJI={'Футболка':'👕','Батник / свитшот':'🧥','Кепка':'🧢','Термос':'🥤'};
 function initial(){
  const leads=[
@@ -420,19 +443,40 @@ function catalogView(){return heading('SHMOT312 / ассортимент','Ка�
 
 const MOCKUP_STAGES={not_sent:'Не отправлен',waiting:'Ожидает согласования',revision:'Правки',approved:'Утверждён'};
 const PRODUCTION_STAGES={not_started:'Не передан в цех',queued:'Очередь',printing:'Изготовление',qc:'Контроль качества',ready:'Готов'};
+// Every active order belongs to exactly one board column. Other order details remain unchanged.
+const BOARD_STAGES=[
+ {key:'mockup',title:'01 / Заявка и макет',caption:'Нужно уточнить ТЗ или согласовать макет'},
+ {key:'payment',title:'02 / Ждём оплату',caption:'Заказы на этапе оплаты'},
+ {key:'production',title:'03 / Производство',caption:'Принятые в работу и изготовление'},
+ {key:'shipping',title:'04 / К выдаче и доставке',caption:'Готово к передаче или уже отправлено'}
+];
+function boardStage(o){
+ if(o.status==='shipping'||o.status==='ready'||o.status==='done')return 'shipping';
+ if(o.status==='payment')return 'payment';
+ if(o.status==='production')return (o.productionStage==='ready'?'shipping':'production');
+ return 'mockup';
+}
+function moveOrderToStage(orderId,stage){
+ const o=db.orders.find(x=>x.id===orderId);
+ const col=BOARD_STAGES.find(x=>x.key===stage);
+ if(!o||!col||o.status==='cancelled'||o.status==='done')return;
+ if(boardStage(o)===stage)return;
+ // Dragging changes the order's workflow stage, never its paid amount or client's approval.
+ if(stage==='mockup'){o.status='mockup';o.productionStage='not_started'}
+ else if(stage==='payment'){o.status='payment'}
+ else if(stage==='production'){o.status='production';if(!o.productionStage||o.productionStage==='not_started'||o.productionStage==='ready')o.productionStage='queued'}
+ else if(stage==='shipping'){o.status='ready';o.productionStage='ready'}
+ refresh();
+ toast('Заказ #'+o.id+' → '+col.title.replace(/^\d+ \/ /,'')+'. Этап сохранён.');
+}
 function productionView(){
  const orders=db.orders.filter(o=>!['done','cancelled'].includes(o.status));
- const groups=[
-  {title:'01 / Заявка и макет',caption:'Нужно уточнить ТЗ или согласовать макет',filter:o=>!['payment','shipping'].includes(o.status)&&(o.printType!=='Без нанесения'&&(o.mockupStatus||'not_sent')!=='approved'||o.status==='draft')},
-  {title:'02 / Ждём оплату',caption:'Заказы на этапе оплаты',filter:o=>o.status==='payment'},
-  {title:'03 / Производство',caption:'Принятые в работу и изготовление',filter:o=>!['payment','shipping','draft'].includes(o.status)&&(o.printType==='Без нанесения'||(o.mockupStatus||'not_sent')==='approved')&&(o.productionStage||'not_started')!=='ready'},
-  {title:'04 / К выдаче и доставке',caption:'Готово к передаче или уже отправлено',filter:o=>o.status==='shipping'||(o.productionStage||'not_started')==='ready'&&o.status!=='payment'}
- ];
  const late=orders.filter(o=>o.deadline&&o.deadline<localDay());
- return heading('SHMOT312 / контроль сроков','Производство','Следи за макетами, оплатой и сроками — не теряй заказ между менеджером и цехом.',`<button class="btn primary" data-action="new-order">＋ Новый заказ</button>`)+
- `<div class="notice warn"><strong>Важно:</strong> этот экран показывает записи, которые вы заполняете вручную. Он не синхронизирован с реальным цехом, и подтверждение сроков требует согласования с производством.</div>`+
+ return heading('SHMOT312 / контроль сроков','Производство','Перетаскивай карточки между этапами. На телефоне используй «Переместить в…».',`<button class="btn primary" data-action="new-order">＋ Новый заказ</button>`)+
+ `<div class="notice warn"><strong>Важно:</strong> перенос изменяет этап заказа в CRM, но не подтверждает оплату или согласование макета с клиентом. С реальным цехом автоматической синхронизации нет.</div>`+
  `<div class="stats"><div class="stat"><div class="stat-top">Активных заказов</div><div class="num">${orders.length}</div><div class="foot">Без завершённых и отменённых</div></div><div class="stat"><div class="stat-top">Ждут макет</div><div class="num">${orders.filter(o=>o.printType!=='Без нанесения'&&(o.mockupStatus||'not_sent')!=='approved').length}</div><div class="foot">Нужна проверка или согласование</div></div><div class="stat"><div class="stat-top">Просрочен срок</div><div class="num">${late.length}</div><div class="foot">По назначенной дате изготовления</div></div><div class="stat accent"><div class="stat-top">Осталось оплатить</div><div class="num">${fmt(orders.reduce((a,o)=>a+Math.max(0,total(o)-Number(o.paid||0)),0))}</div><div class="foot">По активным заказам</div></div></div>`+
- `<div class="workboard">${groups.map(g=>`<section class="workcol"><div class="workcol-head"><h2>${g.title}</h2><p>${g.caption}</p></div>${orders.filter(g.filter).map(o=>{const l=getLead(o.leadId),t=total(o),need=Math.max(0,t-(o.paid||0));return `<article class="workcard"><div class="wc-top"><strong>#${esc(o.id)}</strong>${tag(o.status,orderStatuses[o.status])}</div><h3>${esc(l?.name||'Клиент')}</h3><p>${esc(o.items.map(i=>i.name+' ×'+i.qty).join(', '))}</p><div class="worktags">${o.printType!=='Без нанесения'?`<span class="tag ${(o.mockupStatus||'not_sent')==='approved'?'green':'yellow'}">${esc(MOCKUP_STAGES[o.mockupStatus||'not_sent'])}</span>`:'<span class="tag">Без печати</span>'}<span class="tag">${esc(PRODUCTION_STAGES[o.productionStage||'not_started'])}</span></div><div class="wc-stats"><span>Срок: <b>${date(o.deadline)}</b></span><span>Доплата: <b>${fmt(need)}</b></span></div><button class="btn outline sm" data-edit-order="${o.id}">Открыть заказ ↗</button></article>`}).join('')||'<div class="empty">Пока пусто</div>'}</section>`).join('')}</div>`;
+ `<div class="board-help"><span class="board-help-icon">↔</span><span><strong>Управляй заказами прямо на доске.</strong> Захвати карточку мышкой и брось в нужную колонку — изменение сохранится автоматически.</span></div>`+
+ `<div class="workboard" aria-label="Доска заказов с перемещением между этапами">${BOARD_STAGES.map(g=>{const cards=orders.filter(o=>boardStage(o)===g.key);return `<section class="workcol" data-board-stage="${g.key}" aria-label="${g.title}"><div class="workcol-head"><div class="board-column-title"><h2>${g.title}</h2><span class="board-count">${cards.length}</span></div><p>${g.caption}</p></div><div class="board-cards">${cards.map(o=>{const l=getLead(o.leadId),need=Math.max(0,total(o)-(o.paid||0));return `<article class="workcard" draggable="true" data-drag-order="${esc(o.id)}" aria-label="Заказ номер ${esc(o.id)}. ${esc(l?.name||'Клиент')}. Можно перенести в другой этап."><div class="wc-top"><strong>#${esc(o.id)}</strong><span class="board-grip" title="Перетащите карточку" aria-hidden="true">⠿</span>${tag(o.status,orderStatuses[o.status])}</div><h3>${esc(l?.name||'Клиент')}</h3><p>${esc(o.items.map(i=>i.name+' ×'+i.qty).join(', '))}</p><div class="worktags">${o.printType!=='Без нанесения'?`<span class="tag ${(o.mockupStatus||'not_sent')==='approved'?'green':'yellow'}">${esc(MOCKUP_STAGES[o.mockupStatus||'not_sent'])}</span>`:'<span class="tag">Без печати</span>'}<span class="tag">${esc(PRODUCTION_STAGES[o.productionStage||'not_started'])}</span></div><div class="wc-stats"><span>Срок: <b>${date(o.deadline)}</b></span><span>Доплата: <b>${fmt(need)}</b></span></div><label class="move-label" for="move-${esc(o.id)}">Переместить в этап</label><select class="board-move" id="move-${esc(o.id)}" data-move-order="${esc(o.id)}" aria-label="Переместить заказ ${esc(o.id)} в этап">${BOARD_STAGES.map(s=>`<option value="${s.key}" ${s.key===g.key?'selected':''}>${s.title.replace(/^\d+ \/ /,'')}</option>`).join('')}</select><button class="btn outline sm" data-edit-order="${esc(o.id)}">Открыть заказ ↗</button></article>`}).join('')||'<div class="empty board-empty">Пока нет заказов</div>'}</div><div class="board-drop-hint" aria-hidden="true">↓ Отпусти, чтобы перенести</div></section>`}).join('')}</div>`;
 }
 function quoteValues(){const f=$('#quoteForm');if(!f)return null;const values={product:$('.q-product',f).value,qty:Math.max(1,Number($('.q-qty',f).value)||1),base:Math.max(0,Number($('.q-base',f).value)||0),print:Math.max(0,Number($('.q-print',f).value)||0),setup:Math.max(0,Number($('.q-setup',f).value)||0),discount:Math.min(100,Math.max(0,Number($('.q-discount',f).value)||0)),tech:$('.q-tech',f).value};values.gross=(values.base+values.print)*values.qty+values.setup;values.price=Math.round(values.gross*(1-values.discount/100));values.unit=Math.round(values.price/values.qty);return values}
 function updateQuote(){const v=quoteValues();if(!v)return;$('#quoteTotal').textContent=fmt(v.price);$('#quoteUnit').textContent=fmt(v.unit)+' / шт';$('#quoteInfo').textContent=`Изделия ${fmt(v.base*v.qty)} · нанесение ${fmt(v.print*v.qty)} · подготовка ${fmt(v.setup)} · скидка ${v.discount}%`;}
@@ -492,8 +536,37 @@ document.addEventListener('click',e=>{
  case 'copy-quote':{const v=quoteValues();if(!v)break;const p=db.products.find(x=>x.id===v.product);copyText(`Здравствуйте! Расчёт по заказу:\n${p?.name||'Товар'} — ${v.qty} шт.\nНанесение: ${v.tech}\nСтоимость тиража: ${fmt(v.price)} (${fmt(v.unit)} за единицу).\nСтоимость и сроки подлежат подтверждению с производством.`);break;}
  case 'reset':if(confirm('Удалить текущую базу и восстановить демонстрационные данные? Сначала сохраните резервную копию.')){db=initial();closeModal();refresh();toast('Демо-данные восстановлены')}break;
  }});
+let draggingOrderId=null;
+function clearBoardDrag(){draggingOrderId=null;$$('.workcol.is-drop-target').forEach(c=>c.classList.remove('is-drop-target'));$$('.workcard.is-dragging').forEach(c=>c.classList.remove('is-dragging'));}
+document.addEventListener('dragstart',e=>{
+ const card=e.target.closest('[data-drag-order]');
+ if(!card)return;
+ draggingOrderId=card.dataset.dragOrder;
+ e.dataTransfer.effectAllowed='move';
+ e.dataTransfer.setData('text/plain',draggingOrderId);
+ card.classList.add('is-dragging');
+});
+document.addEventListener('dragover',e=>{
+ const target=e.target.closest('[data-board-stage]');
+ if(!draggingOrderId||!target)return;
+ e.preventDefault();
+ e.dataTransfer.dropEffect='move';
+ $$('.workcol.is-drop-target').forEach(c=>{if(c!==target)c.classList.remove('is-drop-target')});
+ target.classList.add('is-drop-target');
+});
+document.addEventListener('drop',e=>{
+ const target=e.target.closest('[data-board-stage]');
+ if(!target||!draggingOrderId)return;
+ e.preventDefault();
+ const orderId=draggingOrderId;
+ const stage=target.dataset.boardStage;
+ clearBoardDrag();
+ moveOrderToStage(orderId,stage);
+});
+document.addEventListener('dragend',clearBoardDrag);
 document.addEventListener('change',async e=>{
  const t=e.target;
+ if(t.dataset.moveOrder){moveOrderToStage(t.dataset.moveOrder,t.value);return}
  if(t.dataset.statusLead){const l=getLead(t.dataset.statusLead);if(l){l.status=t.value;l.lastAt=now();refresh();toast('Этап клиента обновлён')}return}
  if(t.dataset.statusOrder){const o=db.orders.find(o=>o.id===t.dataset.statusOrder);if(o){o.status=t.value;refresh();toast('Этап заказа обновлён')}return}
  if(t.id==='leadStatusFilter'){leadStatus=t.value;openPage('leads');return}if(t.id==='leadSourceFilter'){leadSource=t.value;openPage('leads');return}if(t.id==='orderStatusFilter'){orderStatus=t.value;openPage('orders');return}
